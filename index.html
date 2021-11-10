@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <canvas id="myCanvas" width=500 height=500 style="border: 1px solid black;" />
+
+</body>
+<script>
+  var c = document.getElementById("myCanvas");
+  var ctx = c.getContext("2d");
+  var bg = ctx.createRadialGradient(250, 250, 100, 250, 250, 200);
+  bg.addColorStop(0, "red");
+  bg.addColorStop(.5, "green");
+  bg.addColorStop(1, "yellow");
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, 500, 500);
+  var pixel = ctx.getImageData(200, 200, 300, 300);
+  var data = pixel.data, col = pixel.width, row = pixel.height;
+  for (var i = 0; i < row; i++) {
+
+    // 获取上一行的 rgba 4 值之和
+    var c = row * 4 * i;
+    for (var j = 0; j < col; j++) {
+      // 修改每列的 rgba 的值
+      data[c + j * 4 + 3] = 100;
+    }
+  }
+  ctx.putImageData(pixel, 0, 0)
+</script>
+
+</html>
